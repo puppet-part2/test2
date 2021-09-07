@@ -580,7 +580,7 @@ int g_now = 0;
 int g_max = 5000;
 #define operator_num 20
 #define swarm_num 2
-#define period_core  500000
+#define period_core  250000
 u64 tmp_core_time = 0;
 int swarm_now = 0 ;
 double x_now[swarm_num][operator_num],
@@ -619,8 +619,8 @@ double x_now[swarm_num][operator_num],
 #define STAGE_OverWriteExtra 18
 #define STAGE_InsertExtra 19
 
-#define period_pilot 100000
- double period_pilot_tmp = 10000.0;
+#define period_pilot 50000
+ double period_pilot_tmp = 5000.0;
 
 int key_lv = 0;
 
@@ -887,7 +887,7 @@ int select_algorithm(int extras) {
     srandom(seed[0]);
 
   int operator_number = operator_num;
-  if (start_distill == 0) operator_number = operator_number - 3;
+  //if (start_distill == 0) operator_number = operator_number - 3;
   else if (extras < 2) operator_number = operator_number - 2;
   double range_sele = (double)probability_now[swarm_now][operator_number - 1];
   double sele = ((double)(random() % 1000000) * 0.000001 * range_sele);
@@ -912,14 +912,27 @@ else{
 
   }
 }*/
+if(use_inter_trial != 0){
   for (i_puppet = 0; i_puppet < operator_number; i_puppet++)
   {
           if (sele < probability_now[swarm_now][i_puppet])
             break;
   }
+}
+else{
+    for (i_puppet = 0; i_puppet < operator_number; i_puppet++)
+  {
+          if (sele < probability_now[swarm_now][i_puppet])
+            break;
+  }
+  if (i_puppet == 16)
+  {
+    i_puppet = rand() % 3 + 17;
+  }
+}
 
-  if ((i_puppet-1 >= 0 && sele < probability_now[swarm_now][i_puppet-1]) || (i_puppet + 1 < operator_num && sele > probability_now[swarm_now][i_puppet +  1]))
-    FATAL("error select_algorithm");
+  //if ((i_puppet-1 >= 0 && sele < probability_now[swarm_now][i_puppet-1]) || (i_puppet + 1 < operator_num && sele > probability_now[swarm_now][i_puppet +  1]))
+  //  FATAL("error select_algorithm");
   return i_puppet;
 }
 
