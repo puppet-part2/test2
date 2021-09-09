@@ -5280,6 +5280,7 @@ EXP_ST u8 common_fuzz_stuff(char** argv, u8* out_buf, u32 len, struct loghistory
 
 u64 cur_time_lyu = get_cur_time();
 
+/*
 if( (cur_time_lyu - start_time2) > 3600000 )
 {
   start_time2 = get_cur_time();
@@ -5299,7 +5300,7 @@ if( (cur_time_lyu - start_time2) > 3600000 )
   fprintf(fddd,"%d", (int)(unique_crashes));
   fprintf(fddd,"\n");
   fclose(fddd);
-}
+}*/
 
 
   if (post_handler) {
@@ -19188,6 +19189,8 @@ if( (cur_time_lyu - start_time2) > 7200000 )
         else if (key_module == 1)
             key_val_lv = core_fuzzing(argv);
 
+
+                        /*
                         if ( lock_key == 0 && (cur_time_lyu - start_time ) % 7200000  <  2200000) //two hours
                         {
                             lock_key = 1;
@@ -19234,7 +19237,7 @@ if( (cur_time_lyu - start_time2) > 7200000 )
 
                             fclose(fddd);
 
-                        }
+                        }*/
 
         else if (key_module == 2)
         {
@@ -19242,10 +19245,10 @@ if( (cur_time_lyu - start_time2) > 7200000 )
             dict_incremental();
             selection_update_distill();
             start_distill = 1;
-            if ( (cur_time_lyu - start_time ) % 7200000  >  5200000  && lock_key == 1)
-            {
-                lock_key = 0;
-            }
+            //if ( (cur_time_lyu - start_time ) % 7200000  >  5200000  && lock_key == 1)
+            //{
+            //    lock_key = 0;
+            //}
         }
             
     }
