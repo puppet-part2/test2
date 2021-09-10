@@ -891,6 +891,7 @@ int select_algorithm(int extras) {
   //else if (extras < 2) operator_number = operator_number - 2;
   //double range_sele = (double)probability_now[swarm_now][operator_number - 1];
   //double sele = ((double)(random() % 1000000) * 0.000001 * range_sele);
+  double sele = ((double)(random() % 1000000) * 0.000001 );
 /*
 if(use_inter_trial != 0)
 {
