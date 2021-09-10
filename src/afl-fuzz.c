@@ -882,15 +882,15 @@ int select_algorithm(int extras) {
   //double total_puppet = 0.0;
   //srandom(time(NULL));
 
-    u32 seed[2];
-    ck_read(dev_urandom_fd, &seed, sizeof(seed), "/dev/urandom");
-    srandom(seed[0]);
+    //u32 seed[2];
+    //ck_read(dev_urandom_fd, &seed, sizeof(seed), "/dev/urandom");
+    //srandom(seed[0]);
 
-  int operator_number = operator_num;
+  //int operator_number = operator_num;
   //if (start_distill == 0) operator_number = operator_number - 3;
   //else if (extras < 2) operator_number = operator_number - 2;
-  double range_sele = (double)probability_now[swarm_now][operator_number - 1];
-  double sele = ((double)(random() % 1000000) * 0.000001 * range_sele);
+  //double range_sele = (double)probability_now[swarm_now][operator_number - 1];
+  //double sele = ((double)(random() % 1000000) * 0.000001 * range_sele);
 /*
 if(use_inter_trial != 0)
 {
@@ -913,14 +913,14 @@ else{
   }
 }*/
 if(use_inter_trial != 0){
-  for (i_puppet = 0; i_puppet < operator_number; i_puppet++)
+  for (i_puppet = 0; i_puppet < operator_num; i_puppet++)
   {
           if (sele < probability_now[swarm_now][i_puppet])
             break;
   }
 }
 else{
-    for (i_puppet = 0; i_puppet < operator_number; i_puppet++)
+    for (i_puppet = 0; i_puppet < operator_num; i_puppet++)
   {
           if (sele < probability_now[swarm_now][i_puppet])
             break;
