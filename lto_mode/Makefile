@@ -56,9 +56,9 @@ ifeq "$(origin CC)" "default"
 endif
 
 ifndef AFL_TRACE_PC
-  PROGS      = afl-clang-lto afl-llvm-pass.so afl-llvm-rt.o afl-llvm-rt-32.o afl-llvm-rt-64.o
+  PROGS      = ../afl-clang-lto ../afl-llvm-pass.so ../afl-llvm-rt.o ../afl-llvm-rt-32.o ../afl-llvm-rt-64.o
 else
-  PROGS      = afl-clang-lto afl-llvm-rt.o afl-llvm-rt-32.o afl-llvm-rt-64.o
+  PROGS      = ../afl-clang-lto ../afl-llvm-rt.o ../afl-llvm-rt-32.o ../afl-llvm-rt-64.o
 endif
 
 all: test_deps $(PROGS) all_done
@@ -76,31 +76,31 @@ endif
 	@test -f ../afl-showmap || ( echo "[-] Oops, can't find '../afl-showmap'. Be sure to compile AFL first."; exit 1 )
 	@echo "[+] All set and ready to build."
 
-afl-clang-lto: afl-clang-lto.c | test_deps
+../afl-clang-lto: afl-clang-lto.c | test_deps
 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
-	ln -sf afl-clang-lto afl-clang-lto++
+	ln -sf afl-clang-lto ../afl-clang-lto++
 
-afl-llvm-pass.so: afl-llvm-pass.so.cc | test_deps
+../afl-llvm-pass.so: afl-llvm-pass.so.cc | test_deps
 	$(CXX) $(CLANG_CFL) -shared $< -o $@ $(CLANG_LFL)
 
-afl-llvm-rt.o: afl-llvm-rt.o.c | test_deps
+../afl-llvm-rt.o: afl-llvm-rt.o.c | test_deps
 	$(CC) $(CFLAGS) -fPIC -c $< -o $@
 
-afl-llvm-rt-32.o: afl-llvm-rt.o.c | test_deps
+../afl-llvm-rt-32.o: afl-llvm-rt.o.c | test_deps
 	@printf "[*] Building 32-bit variant of the runtime (-m32)... "
 	@$(CC) $(CFLAGS) -m32 -fPIC -c $< -o $@ 2>/dev/null; if [ "$$?" = "0" ]; then echo "success!"; else echo "failed (that's fine)"; fi
 
-afl-llvm-rt-64.o: afl-llvm-rt.o.c | test_deps
+../afl-llvm-rt-64.o: afl-llvm-rt.o.c | test_deps
 	@printf "[*] Building 64-bit variant of the runtime (-m64)... "
 	@$(CC) $(CFLAGS) -m64 -fPIC -c $< -o $@ 2>/dev/null; if [ "$$?" = "0" ]; then echo "success!"; else echo "failed (that's fine)"; fi
 
 
 
 all_done:
-	@echo "[+] All done! You can now use 'afl-clang-lto' to compile programs."
+	@echo "[+] All done! You can now use '../afl-clang-lto' to compile programs."
 
 .NOTPARALLEL: clean
 
 clean:
 	rm -f *.o *.so *~ a.out core core.[1-9][0-9]* test-instr .test-instr0 .test-instr1 
-	rm -f $(PROGS) afl-clang-lto++
+	rm -f $(PROGS) ../afl-clang-lto++
