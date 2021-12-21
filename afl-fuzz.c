@@ -20336,7 +20336,8 @@ int main(int argc, char** argv) {
   s32 opt;
   u64 prev_queued = 0;
   u32 sync_interval_cnt = 0, seek_to;
-  u8  *extras_dir = 0;
+  u8 *extras_dir[4];
+  u8 extras_dir_cnt = 0;
   u8  mem_limit_given = 0;
   u8  exit_1 = !!getenv("AFL_BENCH_JUST_ONE");
   char** use_argv;
@@ -20427,11 +20428,22 @@ int main(int argc, char** argv) {
         out_file = optarg;
         break;
 
-      case 'x': /* dictionary */
+      //case 'x': /* dictionary */
 
-        if (extras_dir) FATAL("Multiple -x options not supported");
-        extras_dir = optarg;
+      //  if (extras_dir) FATAL("Multiple -x options not supported");
+      //  extras_dir = optarg;
+      //  break;
+      case 'x':{                                               /* dictionary */
+
+        if (extras_dir_cnt >= 4) {
+
+          FATAL("More than four -x options are not supported");
+
+        }
+
+        extras_dir[extras_dir_cnt++] = optarg;
         break;
+      }
 
       case 't': { /* timeout */
 
@@ -20888,7 +20900,16 @@ break;
 
   pivot_inputs();
 
-  if (extras_dir) load_extras(extras_dir);
+  //if (extras_dir) load_extras(extras_dir);
+   if (extras_dir_cnt) {
+
+    for (u8 i = 0; i < extras_dir_cnt; i++) {
+
+      load_extras( extras_dir[i]);
+
+    }
+
+  }
 
   if (!timeout_given) find_timeout();
 
