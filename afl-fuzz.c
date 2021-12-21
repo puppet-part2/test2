@@ -20353,6 +20353,7 @@ int main(int argc, char** argv) {
     FILE *fpRead=fopen(bb_file_ptr,"r");
     fscanf(fpRead,"%u",&afl_map_size);
     fclose(fpRead);
+    OKF("use lto_mode, the number of edge id is %u.", afl_map_size);
   }
 
   initialize_lto();
